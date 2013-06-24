@@ -48,6 +48,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 #define ERASE_MARGIN 5
 #define T4K_TOOLTIP_FONTSIZE 18
 
+//TTS Thread
+SDL_Thread *tts_thread;
+
 extern int debug_status;
 
 //extern SDL_Color red, yellow, white, black;
