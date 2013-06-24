@@ -252,6 +252,16 @@ static char wrapped_lines[MAX_LINES][MAX_LINEWIDTH]; //!< Global buffer for wrap
 
 //TODO separate headers for different areas a la SDL?
 
+
+void T4K_Tts_init();
+void T4K_Tts_set_voice(char voice_name[]);
+void T4K_Tts_set_volume(int volume);
+void T4K_Tts_set_rate(int rate);
+void T4K_Tts_set_pitch(int pitch);
+void T4K_Tts_say(int rate,int pitch, int interrupt, const char* text, ...);
+
+
+
 //==============================================================================
 //                     Public Definitions in t4k_main.c                       
 //==============================================================================
