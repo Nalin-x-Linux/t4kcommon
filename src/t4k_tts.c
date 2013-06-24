@@ -3,16 +3,12 @@ Compile using folowing command
 gcc -Wall -o speak speak.c -lespeak -I/usr/include/espeak/
 */
 
-#define DEFAULT_VALUE 0
-#define INTERRUPT 0
-#define APPEND 1
 
-#define DEFAULT 0
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
+
+#include "t4k_globals.h"
+#include "t4k_common.h"
+
 #include <speak_lib.h>
-#include <stdarg.h>
 #include "SDL_thread.h"
 
 
