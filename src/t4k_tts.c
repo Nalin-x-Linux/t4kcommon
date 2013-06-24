@@ -34,26 +34,26 @@ int tts_thread_func(void *arg)
 	return 1;
 }
 
-void tts_wait()
+void T4k_Tts_wait()
 {
 	while (espeak_IsPlaying())
 	SDL_Delay(30); 
 }
 
 //This function should be called at begining 
-void tts_init()
+void T4k_Tts_init()
 {
 	espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 500, NULL, 0 );
 }
 
 //Used to set person in TTS. in the case of espeak we will set language by this.
-void tts_set_voice(char voice_name[]){
+void T4k_Tts_set_voice(char voice_name[]){
 	espeak_SetVoiceByName(voice_name);
 }
 
 
 //Stop the speech if it is working
-void tts_stop(){
+void T4k_Tts_stop(){
 	extern SDL_Thread *tts_thread;
 	if (tts_thread)
     {
@@ -65,19 +65,19 @@ void tts_stop(){
 
 
 //TTS Parameters
-void tts_set_volume(int volume){
+void T4k_Tts_set_volume(int volume){
 espeak_SetParameter(espeakVOLUME,2*volume,0);
 }
 
-void tts_set_rate(int rate){
+void T4k_Tts_set_rate(int rate){
 espeak_SetParameter(espeakRATE,(3.7*rate)+80,0);
 }
 
-void tts_set_pitch(int pitch){
+void T4k_Tts_set_pitch(int pitch){
 espeak_SetParameter(espeakPITCH,pitch,0);
 }
 
-void tts_say(int rate,int pitch,int interrupt, const char* text, ...){
+void T4k_Tts_say(int rate,int pitch,int interrupt, const char* text, ...){
 	int *interrupt_address;
 	extern SDL_Thread *tts_thread;
 
@@ -86,15 +86,15 @@ void tts_say(int rate,int pitch,int interrupt, const char* text, ...){
 	
 			
 	if (interrupt == INTERRUPT)
-		tts_stop();
+		T4k_Tts_stop();
 	
 	//Setting given rate if rate != 0
 	if (rate != DEFAULT_VALUE)
-	tts_set_rate(rate);
+	T4k_Tts_set_rate(rate);
 
-        //Setting pitch rate if rate != 0
-        if (pitch != DEFAULT_VALUE)
-        tts_set_pitch(pitch);
+    //Setting pitch rate if rate != 0
+    if (pitch != DEFAULT_VALUE)
+    T4k_Tts_set_pitch(pitch);
 
 	
 	char out[1000];
