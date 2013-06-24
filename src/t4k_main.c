@@ -60,6 +60,8 @@ int InitT4KCommon(int debug_flags)
 	    "The Simple DirectMedia error that occured was:\n"
 	    "%s\n\n", SDL_GetError());
     }
+    /* TTS */
+    T4K_Tts_init();
     
     /* Text (either SDL_ttf or SDL_Pango): */
     if (!T4K_Setup_SDL_Text())
