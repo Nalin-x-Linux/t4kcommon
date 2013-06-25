@@ -862,6 +862,8 @@ int T4K_RunMenu(int index, bool return_choice, void (*draw_background)(), int (*
 			    menu->submenu[menu->first_entry + loc]->icon->cur = 0;
 			}
 			SDL_UpdateRect(T4K_GetScreen(), tmp_rect.x, tmp_rect.y, tmp_rect.w, tmp_rect.h);
+			
+			//Announce the menu item
 			T4K_Tts_say(DEFAULT_VALUE,DEFAULT_VALUE,INTERRUPT,"%s",menu->submenu[loc + menu->first_entry]->title);
 
 			// Set and render new description text
