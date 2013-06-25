@@ -48,10 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 #define ERASE_MARGIN 5
 #define T4K_TOOLTIP_FONTSIZE 18
 
-//TTS Parameters
-#define DEFAULT_VALUE 0
-#define INTERRUPT 0
-#define APPEND 1
+
 
 //TTS Thread
 SDL_Thread *tts_thread;

@@ -62,6 +62,12 @@
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 
+
+//TTS Parameters
+#define DEFAULT_VALUE 0
+#define INTERRUPT 0
+#define APPEND 1
+
 //==============================================================================
 // Debugging macros
 //
