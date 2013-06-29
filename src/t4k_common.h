@@ -259,6 +259,12 @@ static char wrapped_lines[MAX_LINES][MAX_LINEWIDTH]; //!< Global buffer for wrap
 //TODO separate headers for different areas a la SDL?
 
 
+typedef struct
+{
+	int interrupt;
+	char text[1000];
+}tts_argument;
+
 void T4K_Tts_init();
 void T4K_Tts_set_voice(char voice_name[]);
 void T4K_Tts_set_volume(int volume);

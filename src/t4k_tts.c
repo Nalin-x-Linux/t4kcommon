@@ -1,6 +1,7 @@
 /*
 Compile using folowing command
-gcc -Wall -o speak speak.c -lespeak -I/usr/include/espeak/
+gcc -Wall -o speak speak.c -lespeak -I/usr/include/espeak/ 
+     -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL  -lSDL
 */
 
 
@@ -17,21 +18,31 @@ gcc -Wall -o speak speak.c -lespeak -I/usr/include/espeak/
 //TTS Thread function
 int tts_thread_func(void *arg)
 {
-	int interrupt = *((int*)(arg));
-        if (interrupt != INTERRUPT) 
-        { 
-                while (espeak_IsPlaying()) 
-                { 
-                        fprintf(stderr,"\nAlive"); 
-                } 
-        } 
+	espeak_POSITION_TYPE position_type = POS_CHARACTER;
+	tts_argument recived = *((tts_argument*)(arg));
+	fprintf(stderr,"Recived : %s - %d",recived.text,recived.interrupt);
+	
+	
+	if (recived.interrupt == INTERRUPT)
+		T4K_Tts_cancel();
+	else
+		T4K_Tts_wait();
+	
+	int Size = strlen(recived.text)+1;
+	espeak_Synth(recived.text, Size, 0, position_type, 0,	espeakCHARS_AUTO,0, NULL);	
 	espeak_Synchronize();
 	return 1;
 }
 
+void T4K_Tts_cancel()
+{
+	espeak_Cancel();
+}
+
 void T4K_Tts_wait()
 {
-	while (espeak_IsPlaying())
+	while (espeak_IsPlaying() && tts_thread)
+		{};
 	SDL_Delay(30); 
 }
 
@@ -73,15 +84,8 @@ espeak_SetParameter(espeakPITCH,pitch,0);
 }
 
 void T4K_Tts_say(int rate,int pitch,int interrupt, const char* text, ...){
-	int *interrupt_address;
 	extern SDL_Thread *tts_thread;
-
-	espeak_POSITION_TYPE position_type = POS_CHARACTER;
-		
-	
-			
-	if (interrupt == INTERRUPT)
-		T4K_Tts_stop();
+	tts_argument data_to_pass;
 	
 	//Setting given rate if rate != 0
 	if (rate != DEFAULT_VALUE)
@@ -91,20 +95,17 @@ void T4K_Tts_say(int rate,int pitch,int interrupt, const char* text, ...){
     if (pitch != DEFAULT_VALUE)
     T4K_Tts_set_pitch(pitch);
 
-	
-	char out[1000];
+	//Getting the formated text
+	char to_say[1000];
 	va_list list;
 	va_start(list,text);
-	vsprintf(out,text,list);
+	vsprintf(to_say,text,list);
 	va_end(list);
 	
 	
-	int Size = strlen(out)+1; 
-	if (1)
-	{
-		espeak_Synth(out, Size, 0, position_type, 0,	espeakCHARS_AUTO,0, NULL);
-		fprintf(stderr,"\nTTS_Say : %s\n",out);
-		interrupt_address = &interrupt;
-		tts_thread = SDL_CreateThread(tts_thread_func, interrupt_address);
-	}
+	data_to_pass.interrupt = interrupt;
+	strcpy(data_to_pass.text,to_say);
+	
+	//Calling threded function to say.	
+	tts_thread = SDL_CreateThread(tts_thread_func, &data_to_pass);
 }	
