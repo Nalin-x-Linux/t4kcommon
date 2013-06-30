@@ -20,7 +20,7 @@ int tts_thread_func(void *arg)
 {
 	espeak_POSITION_TYPE position_type = POS_CHARACTER;
 	tts_argument recived = *((tts_argument*)(arg));
-	fprintf(stderr,"Recived : %s - %d",recived.text,recived.interrupt);
+	fprintf(stderr,"\nSpeaking : %s - %d",recived.text,recived.interrupt);
 	
 	
 	if (recived.interrupt == INTERRUPT)
