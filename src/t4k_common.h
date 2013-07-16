@@ -64,7 +64,7 @@
 
 
 //TTS Parameters
-#define DEFAULT_VALUE 0
+#define DEFAULT_VALUE 30
 #define INTERRUPT 0
 #define APPEND 1
 

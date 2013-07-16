@@ -87,12 +87,7 @@ void T4K_Tts_say(int rate,int pitch,int interrupt, const char* text, ...){
 	extern SDL_Thread *tts_thread;
 	tts_argument data_to_pass;
 	
-	//Setting given rate if rate != 0
-	if (rate != DEFAULT_VALUE)
 	T4K_Tts_set_rate(rate);
-
-    //Setting pitch rate if rate != 0
-    if (pitch != DEFAULT_VALUE)
     T4K_Tts_set_pitch(pitch);
 
 	//Getting the formated text
