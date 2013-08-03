@@ -1,9 +1,27 @@
 /*
-Compile using folowing command
-gcc -Wall -o speak speak.c -lespeak -I/usr/include/espeak/ 
-     -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL  -lSDL
-*/
+   t4k_tts.c:
 
+   Text-To-Speach-related functions.
+
+   Copyright 2013.
+Authors: Nalin.x.Linux <Nalin.x.Linux@gmail.com>
+Project email: <tuxmath-devel@lists.sourceforge.net>
+Project website: http://tux4kids.alioth.debian.org
+
+t4k_tts.c is part of the t4k_common library.
+
+t4k_common is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+t4k_common is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 
 #include "t4k_globals.h"
@@ -13,17 +31,13 @@ gcc -Wall -o speak speak.c -lespeak -I/usr/include/espeak/
 #include "SDL_thread.h"
 
 
-
-
 //TTS Thread function
 int tts_thread_func(void *arg)
 {
 	espeak_POSITION_TYPE position_type = POS_CHARACTER;
 	tts_argument recived = *((tts_argument*)(arg));
-	fprintf(stderr,"\nSpeaking : %s - %d",recived.text,recived.interrupt);
-	
-	
-	if (recived.interrupt == INTERRUPT)
+	fprintf(stderr,"\nSpeaking : %s - %d",recived.text,recived.mode);
+	if (recived.mode == INTERRUPT)
 		T4K_Tts_cancel();
 	else
 		T4K_Tts_wait();
@@ -83,7 +97,16 @@ void T4K_Tts_set_pitch(int pitch){
 espeak_SetParameter(espeakPITCH,pitch,0);
 }
 
-void T4K_Tts_say(int rate,int pitch,int interrupt, const char* text, ...){
+/* Function used to read a text
+ * 
+ * DEFAULT_VALUE (30) can be passed for rate and pitch
+ * 
+ * if mode = INTERRUPT then terminate the currently speaking 
+ * text and read the new text.
+ * 
+ * if mode = APPEND then wait till speaking is finished 
+ * then read the new text   */
+void T4K_Tts_say(int rate,int pitch,int mode, const char* text, ...){
 	extern SDL_Thread *tts_thread;
 	tts_argument data_to_pass;
 	
@@ -98,7 +121,7 @@ void T4K_Tts_say(int rate,int pitch,int interrupt, const char* text, ...){
 	va_end(list);
 	
 	
-	data_to_pass.interrupt = interrupt;
+	data_to_pass.mode = mode;
 	strcpy(data_to_pass.text,to_say);
 	
 	//Calling threded function to say.	
