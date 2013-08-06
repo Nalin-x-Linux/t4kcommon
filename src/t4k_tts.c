@@ -70,9 +70,13 @@ void T4K_Tts_init()
 	espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 500, NULL, 0 );
 }
 
-//Used to set person in TTS. in the case of espeak we will set language by this.
-void T4K_Tts_set_voice(char voice_name[]){
-	espeak_SetVoiceByName(voice_name);
+/*Used to set person in TTS. in the case of espeak we will set 
+ * language by this. return False if language is not available  */
+int T4K_Tts_set_voice(char voice_name[]){
+	if (espeak_SetVoiceByName(voice_name) == EE_OK)
+		return 1;
+	else
+		return 0;
 }
 
 

@@ -272,7 +272,7 @@ typedef struct
 //                  Public Definitions in t4k_tts.c
 //==============================================================================
 void T4K_Tts_init();
-void T4K_Tts_set_voice(char voice_name[]);
+int T4K_Tts_set_voice(char voice_name[]);
 void T4K_Tts_set_volume(int volume);
 void T4K_Tts_set_rate(int rate);
 void T4K_Tts_set_pitch(int pitch);
