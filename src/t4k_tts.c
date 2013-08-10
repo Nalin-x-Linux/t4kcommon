@@ -127,15 +127,14 @@ void T4K_Tts_say(int rate,int pitch,int mode, const char* text, ...){
     T4K_Tts_set_pitch(pitch);
 
 	//Getting the formated text
-	char to_say[1000];
 	va_list list;
 	va_start(list,text);
-	vsprintf(to_say,text,list);
+	data_to_pass.text = (char*) malloc(1000);	
+	vsprintf(data_to_pass.text,text,list);
 	va_end(list);
 	
-	
+	//Passing mode
 	data_to_pass.mode = mode;
-	strcpy(data_to_pass.text,to_say);
 	
 	//Calling threded function to say.	
 	tts_thread = SDL_CreateThread(tts_thread_func, &data_to_pass);
