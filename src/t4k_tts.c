@@ -129,7 +129,7 @@ void T4K_Tts_say(int rate,int pitch,int mode, const char* text, ...){
 	//Getting the formated text
 	va_list list;
 	va_start(list,text);
-	data_to_pass.text = (char*) malloc(1000);	
+	data_to_pass.text = (char*) malloc(10000);	
 	vsprintf(data_to_pass.text,text,list);
 	va_end(list);
 	
