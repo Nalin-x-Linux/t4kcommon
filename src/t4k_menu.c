@@ -957,6 +957,7 @@ int T4K_RunMenu(int index, bool return_choice, void (*draw_background)(), int (*
 			    }
 			    stop = true;
 			}
+			T4K_Tts_say(DEFAULT_VALUE,DEFAULT_VALUE,INTERRUPT,"%s. %s",menu->submenu[loc + menu->first_entry]->title,menu->submenu[loc + menu->first_entry]->desc);
 			break;
 
 		    case STOP_ESC:
