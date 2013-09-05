@@ -52,8 +52,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 //TTS Thread
 SDL_Thread *tts_thread;
-
+int text_to_speech_status;
 extern int debug_status;
+
+
 
 //extern SDL_Color red, yellow, white, black;
 

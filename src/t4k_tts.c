@@ -59,15 +59,19 @@ void T4K_Tts_cancel()
 //wait till current text is spoken
 void T4K_Tts_wait()
 {
-	while (espeak_IsPlaying() && tts_thread)
+	if (text_to_speech_status)
+	{
+		while (espeak_IsPlaying() && tts_thread)
 		{};
-	SDL_Delay(30); 
+		SDL_Delay(30);
+	} 
 }
 
 //This function should be called at begining 
 void T4K_Tts_init()
 {
-	espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 500, NULL, 0 );
+	if (text_to_speech_status)
+		espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 500, NULL, 0 );
 }
 
 /*Used to set person in TTS. in the case of espeak we will set 
@@ -83,12 +87,15 @@ int T4K_Tts_set_voice(char voice_name[]){
 //Stop the speech if it is speaking
 void T4K_Tts_stop(){
 	extern SDL_Thread *tts_thread;
-	if (tts_thread)
-    {
-		SDL_KillThread(tts_thread);
-		tts_thread = NULL;
-        espeak_Cancel();
-    }
+	if (text_to_speech_status)
+	{
+		if (tts_thread)
+		{
+			SDL_KillThread(tts_thread);
+			tts_thread = NULL;
+			espeak_Cancel();
+		}
+	}
 }
 
 
@@ -123,6 +130,7 @@ void T4K_Tts_say(int rate,int pitch,int mode, const char* text, ...){
 	extern SDL_Thread *tts_thread;
 	tts_argument data_to_pass;
 	
+	
 	T4K_Tts_set_rate(rate);
     T4K_Tts_set_pitch(pitch);
 
@@ -136,6 +144,8 @@ void T4K_Tts_say(int rate,int pitch,int mode, const char* text, ...){
 	//Passing mode
 	data_to_pass.mode = mode;
 	
+	if (text_to_speech_status){
 	//Calling threded function to say.	
 	tts_thread = SDL_CreateThread(tts_thread_func, &data_to_pass);
+	}
 }	
