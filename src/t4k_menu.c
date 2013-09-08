@@ -865,9 +865,9 @@ int T4K_RunMenu(int index, bool return_choice, void (*draw_background)(), int (*
 			
 			//Announce the menu item
 			if (menu->submenu[loc + menu->first_entry]->desc != NULL)
-				T4K_Tts_say(DEFAULT_VALUE,DEFAULT_VALUE,INTERRUPT,"%s. %s",menu->submenu[loc + menu->first_entry]->title,menu->submenu[loc + menu->first_entry]->desc);
+				T4K_Tts_say(DEFAULT_VALUE,DEFAULT_VALUE,INTERRUPT,"%s. %s",_(menu->submenu[loc + menu->first_entry]->title),_(menu->submenu[loc + menu->first_entry]->desc));
 			else
-				T4K_Tts_say(DEFAULT_VALUE,DEFAULT_VALUE,INTERRUPT,"%s",menu->submenu[loc + menu->first_entry]->title);			
+				T4K_Tts_say(DEFAULT_VALUE,DEFAULT_VALUE,INTERRUPT,"%s",_(menu->submenu[loc + menu->first_entry]->title));			
 
 			// Set and render new description text
 			{
@@ -961,9 +961,9 @@ int T4K_RunMenu(int index, bool return_choice, void (*draw_background)(), int (*
 			    stop = true;
 			}
 			if (menu->submenu[loc + menu->first_entry]->desc != NULL)
-				T4K_Tts_say(DEFAULT_VALUE,DEFAULT_VALUE,INTERRUPT,"%s. %s",menu->submenu[loc + menu->first_entry]->title,menu->submenu[loc + menu->first_entry]->desc);
+				T4K_Tts_say(DEFAULT_VALUE,DEFAULT_VALUE,INTERRUPT,"%s. %s",_(menu->submenu[loc + menu->first_entry]->title),_(menu->submenu[loc + menu->first_entry]->desc));
 			else
-				T4K_Tts_say(DEFAULT_VALUE,DEFAULT_VALUE,INTERRUPT,"%s",menu->submenu[loc + menu->first_entry]->title);
+				T4K_Tts_say(DEFAULT_VALUE,DEFAULT_VALUE,INTERRUPT,"%s",_(menu->submenu[loc + menu->first_entry]->title));
 			
 			break;
 
