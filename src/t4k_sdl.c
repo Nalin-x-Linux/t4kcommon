@@ -67,7 +67,7 @@ SDL_Surface* T4K_GetScreen()
 {
     if (screen != SDL_GetVideoSurface() )
     {
-	fprintf(stderr, "Video Surface changed from outside of SDL_Extras!\n");
+	//fprintf(stderr, "Video Surface changed from outside of SDL_Extras!\n");
 	screen = SDL_GetVideoSurface();
     }
     return screen;
