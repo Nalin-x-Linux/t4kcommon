@@ -59,12 +59,9 @@ void T4K_Tts_cancel()
 //wait till current text is spoken
 void T4K_Tts_wait()
 {
-	if (text_to_speech_status)
-	{
-		while (espeak_IsPlaying() && tts_thread)
-		{};
-		SDL_Delay(30);
-	} 
+	while (espeak_IsPlaying() && tts_thread)
+	{};
+	SDL_Delay(30); 
 }
 
 //This function should be called at begining 
@@ -87,14 +84,11 @@ int T4K_Tts_set_voice(char voice_name[]){
 //Stop the speech if it is speaking
 void T4K_Tts_stop(){
 	extern SDL_Thread *tts_thread;
-	if (text_to_speech_status)
+	if (tts_thread)
 	{
-		if (tts_thread)
-		{
-			SDL_KillThread(tts_thread);
-			tts_thread = NULL;
-			espeak_Cancel();
-		}
+		SDL_KillThread(tts_thread);
+		tts_thread = NULL;
+		espeak_Cancel();
 	}
 }
 
@@ -131,20 +125,20 @@ void T4K_Tts_say(int rate,int pitch,int mode, const char* text, ...){
 	tts_argument data_to_pass;
 	
 	
+	if (text_to_speech_status){
+	
 	T4K_Tts_set_rate(rate);
     T4K_Tts_set_pitch(pitch);
 
 	//Getting the formated text
 	va_list list;
 	va_start(list,text);
-	data_to_pass.text = (char*) malloc(10000);	
 	vsprintf(data_to_pass.text,text,list);
 	va_end(list);
 	
 	//Passing mode
 	data_to_pass.mode = mode;
 	
-	if (text_to_speech_status){
 	//Calling threded function to say.	
 	tts_thread = SDL_CreateThread(tts_thread_func, &data_to_pass);
 	}

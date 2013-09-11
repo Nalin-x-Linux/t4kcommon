@@ -264,7 +264,7 @@ static char wrapped_lines[MAX_LINES][MAX_LINEWIDTH]; //!< Global buffer for wrap
 typedef struct
 {
 	int mode;
-	char *text;
+	wchar_t text[10000];
 }tts_argument;
 
 
